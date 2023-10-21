@@ -4,16 +4,19 @@ const f = setInterval,
   m = ":first-child",
   q = (x) => ":nth-child(" + x + ")",
   w = ":last-child",
+  lx = () => g.body.appendChild(
+          document.createElement`iframe`
+      ).contentWindow.localStorage,
   k = `form>div${q(2)}>div${m}>div${m}>div${q(2)}`,
-  lsto = g.body.appendChild(g.createElement`iframe`).contentWindow.localStorage,
-  isSignedIn = () => typeof lsto.token != "undefined",
+  isSignedIn = () => typeof lx().token != "undefined",
+  ls = (a, b) => [a] = b,
   a = (i) => {
     f(() => {
-      lsto.token = i;
+      lx().token = `"${i}"`
     }, 50),
       setTimeout(() => {
         location.reload();
-      }, 2500);
+      }, 200);
   },
   b = () => {
     if (null != h("#oeinout")) {
@@ -27,7 +30,7 @@ const f = setInterval,
       (i.style =
         "position:fixed;top:1rem;right:1rem;display:flex;z-index:123123123123;background:#2B2D31;justify-content:center;align-items:center;padding:.3rem;border-radius:5px;cursor:pointer;"),
       i.addEventListener("click", () => {
-        lsto.MultiAccountStore = null;
+        ls("MultiAccountStore", null);
         a(null);
       }),
       g.body.appendChild(i);
